@@ -69,14 +69,14 @@ func (ts *Topics) Get() {
 		params = append(params, ts.Key)
 	}
 
-	sql := `SELECT t.id, t.title, t.topic_key, u.name, t.date FROM topics t LEFT JOIN users u ON u.id=t.user_id ` + w.Compile() + ` ORDER BY ` + ts.Order
+	sql := `SELECT t.id, t.title, t.topic_key, u.name, u.id, t.date FROM topics t LEFT JOIN users u ON u.id=t.user_id ` + w.Compile() + ` ORDER BY ` + ts.Order
 
 	rows, _ := DB.Query(sql, params...)
 	defer rows.Close()
 
 	for rows.Next() {
 		var t Topic
-		rows.Scan(&t.ID, &t.Title, &t.Key, &t.Author, &t.CreatedDate)
+		rows.Scan(&t.ID, &t.Title, &t.Key, &t.Author, &t.AuthorID, &t.CreatedDate)
 
 		ts.Topics = append(ts.Topics, t)
 	}
