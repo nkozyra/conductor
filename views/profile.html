@@ -1,0 +1,49 @@
+{{ template "_partial_header" .}}
+
+<script>
+function gatherImageData() {
+var imageData = $('#image-cropper').cropit('export');
+$('#imagedata').val(imageData);
+return true;
+}
+</script>
+<style>
+.cropit-preview {
+  /* You can specify preview size in CSS */
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+</style>
+<form class="conductor-form" method="POST" onsubmit="return gatherImageData();">
+
+
+
+<div id="image-cropper">
+  <!-- This is where the preview image is displayed -->
+  <div class="cropit-preview"></div>
+  
+  <!-- This range input controls zoom -->
+  <!-- You can add additional elements here, e.g. the image icons -->
+  <input type="range" class="cropit-image-zoom-input" />
+  
+  <!-- This is where user selects new image -->
+  <input type="file" class="cropit-image-input" />
+  
+  <!-- The cropit- classes above are needed
+       so cropit can identify these elements -->
+</div>
+
+
+	<input type="hidden" id="imagedata" name="imagedata" value="" />
+	<div class="conductor-form-row"><input type="submit" class="conductor-button" value="Update" /></div>
+</form>
+z
+<script>
+$(document).ready(function() {
+$('#image-cropper').cropit({ imageBackground: true });
+})
+
+</script>asag
+
+{{ template "_partial_footer" .}}
