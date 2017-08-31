@@ -4,3 +4,4 @@ config/*.json
 *.css.map
 *.sh
 bin/*
+node_modules/*
