@@ -3,6 +3,9 @@ package conductor
 import (
 	"fmt"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func authLogoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -131,10 +134,37 @@ func authLoginProcessHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func imageHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	sid := vars["id"]
+
+	id, _ := strconv.ParseInt(sid, 10, 32)
+
+	data := GetImage(id)
+
+	fmt.Fprintln(w, data)
+}
+
 func authRecoverHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
 func authRecoverProcessHandler(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func profileProcessHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	_, AuthUser := GetSessionUser(w, r)
+	AuthUser.SetImage(r.PostFormValue("imagedata"))
+}
+
+func profileHandler(w http.ResponseWriter, r *http.Request) {
+	RefreshTemplates()
+	site, _ := GetSite(r)
+	PL := Payload{
+		Title: "Profile",
+		Site:  site,
+	}
+	Templates.ExecuteTemplate(w, "profile.html", PL)
 }

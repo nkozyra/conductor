@@ -48,6 +48,16 @@ func (u User) Set() error {
 	return nil
 }
 
+func (u *User) SetImage(imagedata string) {
+	DB.Exec(`INSERT INTO user_images SET user_id=?, data=? ON DUPLICATE KEY UPDATE data=?`, u.ID, imagedata, imagedata)
+}
+
+func GetImage(id int64) string {
+	var image string
+	DB.QueryRow(`SELECT data from user_images WHERE user_id=?`, id).Scan(&image)
+	return image
+}
+
 func (us *Users) Get() error {
 	var params []interface{}
 	w := NewWheres()
