@@ -1,16 +1,22 @@
 {{ template "_partial_header" .}}
 
 {{ range .Page.Posts }}
-<div class="conductor-post">
-{{.Text}}
-	<div class="conductor-post-meta">{{.AuthorName}}</div>
+
+
+
+<div class="conductor-post row">
+		<div class="col-xs-1"><img class="conductor-avatar" src="/image/user/{{.AuthorID}}" /></div>
+		<div class="col-xs-11">
+			{{.Text}}
+			<div class="conductor-post-meta">{{.AuthorName}}</div>
+		</div>
 </div>
 {{ end }}
 
 {{ if $.User.Authenticated }}
 
 <form class="conductor-form"  method="POST">
-	<div class="conductor-form-row"><textarea name="text" placeholder="Text"></textarea></div>
+	<div class="conductor-form-row"><textarea name="text" rows="8" placeholder="Text"></textarea></div>
 	<div class="conductor-form-row"><input type="submit" class="conductor-button" value="Reply"></div>
 </form>
 {{ end }}

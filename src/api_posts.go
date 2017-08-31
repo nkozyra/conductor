@@ -50,14 +50,14 @@ func (ps *Posts) Get() {
 		params = append(params, ps.TopicID)
 	}
 
-	sql := `SELECT p.id, u.name, p.text FROM posts p LEFT JOIN users u ON u.id=p.user_id  ` + w.Compile()
+	sql := `SELECT p.id, u.name, u.id, p.text FROM posts p LEFT JOIN users u ON u.id=p.user_id  ` + w.Compile()
 	fmt.Println(sql)
 	rows, _ := DB.Query(sql, params...)
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Post
-		rows.Scan(&p.ID, &p.AuthorName, &p.Text)
+		rows.Scan(&p.ID, &p.AuthorName, &p.AuthorID, &p.Text)
 
 		ps.Posts = append(ps.Posts, p)
 	}

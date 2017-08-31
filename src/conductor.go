@@ -70,6 +70,9 @@ func StartServer() error {
 	assets := http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/")))
 	r.PathPrefix("/assets").Handler(assets)
 
+	nmods := http.StripPrefix("/node_modules/", http.FileServer(http.Dir("./node_modules/")))
+	r.PathPrefix("/node_modules").Handler(nmods)
+
 	r.HandleFunc("/", utilPingHandler)
 	r.HandleFunc("/members", membersHandler)
 	r.HandleFunc("/register", authRegisterHandler).Methods("GET")
@@ -77,6 +80,8 @@ func StartServer() error {
 	r.HandleFunc("/login", authLoginHandler).Methods("GET")
 	r.HandleFunc("/login", authLoginProcessHandler).Methods("POST")
 	r.HandleFunc("/logout", authLogoutHandler)
+	r.HandleFunc("/profile", profileHandler).Methods("GET")
+	r.HandleFunc("/profile", profileProcessHandler).Methods("POST")
 	r.HandleFunc("/recover", authRecoverHandler).Methods("GET")
 	r.HandleFunc("/recover", authRecoverProcessHandler).Methods("POST")
 	r.HandleFunc("/forums", forumsHandler)
@@ -89,6 +94,8 @@ func StartServer() error {
 	r.HandleFunc("/forum/{form_guid}", utilPingHandler)
 	r.HandleFunc("/topic/{topic_guid}", utilPingHandler)
 	r.HandleFunc("/topic/{topic_guid}/{page}", utilPingHandler)
+
+	r.HandleFunc("/image/user/{id}", UserImage)
 
 	r.HandleFunc("/ping.html", utilPingHandler)
 
