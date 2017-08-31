@@ -3,6 +3,9 @@
 <head>
 	<title>{{ .MetaTitle }}</title>
 	<link href="/assets/css/conductor.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css" >
+	<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<style>
 
 	.primary {
@@ -55,5 +58,5 @@
 	{{ range .Breadcrumbs }}<li>{{if .Link}}<a href="{{.Link}}">{{.Label}}</a>{{ else }}{{.Link}}{{end}}</li>{{ end }}
 	</ul>
 	<h1>{{ .Title }}</h1>
-
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cropit/0.5.1/jquery.cropit.min.js"></script>
 {{ end }}
